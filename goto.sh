@@ -57,6 +57,9 @@ goto()
     -l|--list)
       _goto_list_aliases
       ;;
+    -L)
+      _goto_list_aliases -p
+      ;;
     -x|--expand) # Expand an alias
       _goto_expand_alias "$@"
       ;;
@@ -103,6 +106,8 @@ OPTIONS:
     goto -o|--pop
   -l, --list: lists aliases
     goto -l|--list
+  -L: Lists aliases without color, in an unaligned format for easier processing
+    goto -L
   -x, --expand: expands an alias
     goto -x|--expand <alias>
   -c, --cleanup: cleans up non existent directory aliases
@@ -140,7 +145,11 @@ _goto_list_aliases()
       fi
     done < "$GOTO_DB"
     while read -r name directory; do
-      printf "\e[1;36m%${maxlength}s  \e[0m%s\n" "$name" "$directory"
+      if [ "$1" == "-p" ]; then   # For plain text
+        printf "%s:%s\n" "$name" "$directory"
+      else
+        printf "\e[1;36m%${maxlength}s  \e[0m%s\n" "$name" "$directory"
+      fi
     done < "$GOTO_DB"
   else
     echo "You haven't configured any directory aliases yet."

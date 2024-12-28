@@ -23,7 +23,7 @@ goto dev
 
 ```bash
 $ goto <tab>
-bc /etc/bash_completion.d                     
+bc /etc/bash_completion.d
 dev /home/iridakos/development
 rubies /home/iridakos/.rvm/rubies
 ```
@@ -154,6 +154,11 @@ goto -l
 or
 ```bash
 goto --list
+```
+
+To get the list without color, in an unaligned format for easier processing, use:
+```bash
+goto -L
 ```
 
 ### Expand an alias
